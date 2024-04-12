@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Warning() {
+export default function Warning({ text }) {
     return (
-        <div>Bạn chắc chắn muốn xóa không ?</div>
+        <div>{text}</div>
     )
 }

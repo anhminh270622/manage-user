@@ -1,0 +1,31 @@
+.layout {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    /* background-color: var(--background-primary-0); */
+}
+
+Header {
+    text-align: center;
+    height: 64px;
+    padding-inline: 48px;
+    line-height: 64px;
+    display: flex;
+    align-items: center;
+
+}
+
+Content {
+    margin: 0 auto;
+
+}
+
+Sider {
+    line-height: 120px;
+}
+
+Footer {
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

@@ -2,16 +2,14 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 const getButtonBackgroundColor = (type) => {
-    switch (type) {
-        case 'delete':
-            return 'var(--background-button-delete)';
-        case 'edit':
-            return 'var(--background-button-edit)';
-        case 'add':
-            return 'var(--background-button-add)';
-        default:
-            return 'var(--background-button)'; // Màu mặc định
-    }
+  switch (type) {
+    case 'delete':
+      return 'var(--background-button-delete)';
+    case 'edit':
+      return 'var(--background-button-edit)';
+    default:
+      return ''; // Màu mặc định
+  }
 };
 
 export const ButtonStyled = styled(Button)`
