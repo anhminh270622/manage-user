@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { Button, Input, Modal } from 'antd';
-import { LogoutOutlined, LoginOutlined } from '@ant-design/icons';
+import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from '@tanstack/react-router';
-import { FlexSpaceBetween } from '../../define/flex';
+import { Button, Input, Modal, Typography } from 'antd';
+import React, { useState } from 'react';
+import { useStore } from '../../../zustand/store';
 import { ButtonStyled } from '../../define/button';
+import { FlexSpaceBetween } from '../../define/flex';
 import Warning from '../../modal/warning';
 import useNotificationService from '../../notification';
-import { useStore } from '../../../zustand/store';
 const { Search } = Input;
 
 function Header() {
   const navigate = useNavigate();
   const [warning, setWarning] = useState(false);
-  const [login, setLogin] = useState(localStorage.getItem('token') || null);
+  const { token, setToken, setUser } = useStore();
   const { openNotification } = useNotificationService()
-  const { count } = useStore()
   const handleRegisterClick = () => {
     navigate({
       to: '/login',
@@ -30,12 +29,12 @@ function Header() {
   const handleLogOut = () => {
     setWarning(false)
     localStorage.removeItem('token')
-    setLogin(null)
+    setToken('')
+    openNotification('success', 'Đăng xuất thành công')
     navigate({
       to: '/',
     })
-    location.reload()
-
+    setUser(null)
   }
   return (
     < >
@@ -46,12 +45,15 @@ function Header() {
       >
         <Warning text='Bạn chắc chắn muốn đăng xuất không ?' />
       </Modal>
-      <FlexSpaceBetween style={{ width: '100%' }}>
-        <button>{count}</button>
-        <Button type="text" onClick={() => navigate({ to: '/' })}>Quản lý</Button>
+      <FlexSpaceBetween style={{ width: '100%' }} >
+        <Button type="text" onClick={() => navigate({ to: '/' })}>
+          <Typography.Title level={2} style={{ fontWeight: 'bold', color: '#fff', lineHeight: '20px' }}>
+            Quản lý
+          </Typography.Title>
+        </Button>
         <Search style={{ width: '30%' }} placeholder="input search text" enterButton />
-        <ButtonStyled type="primary" onClick={login ? openWarning : handleRegisterClick}>
-          {login ? (<><LogoutOutlined /> Đăng xuất</>) : (<><LoginOutlined /> Đăng nhập</>)}
+        <ButtonStyled type="primary" onClick={token ? openWarning : handleRegisterClick}>
+          {token ? (<><LogoutOutlined /> Đăng xuất</>) : (<><LoginOutlined /> Đăng nhập</>)}
         </ButtonStyled>
       </FlexSpaceBetween>
     </>

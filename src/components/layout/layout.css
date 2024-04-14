@@ -3,7 +3,6 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    /* background-color: var(--background-primary-0); */
 }
 
 Header {
@@ -13,19 +12,16 @@ Header {
     line-height: 64px;
     display: flex;
     align-items: center;
-
+    /* border-bottom: 2px solid #6f0808; */
 }
 
-Content {
-    margin: 0 auto;
-
-}
-
-Sider {
-    line-height: 120px;
+.content {
+    margin: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 Footer {
-    text-align: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

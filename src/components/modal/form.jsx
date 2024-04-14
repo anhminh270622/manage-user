@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Checkbox, Input, Form } from 'antd';
+import { useStore } from '../../zustand/store';
 // const onFinish = (values) => {
 //     console.log('Success:', values);
 // };
@@ -7,17 +8,16 @@ const onFinishFailed = (errorInfo) => {
 };
 const CustomForm = ({ data, onFinish, type, form }) => {
     const [formData] = Form.useForm();
+    const { userUpdate } = useStore();
     useEffect(() => {
-        // if (!data) {
-        //     form.resetFields();
-        // }
+        if (!userUpdate) return formData.resetFields();
         formData.setFieldsValue({
-            ...data,
+            ...userUpdate,
         });
-    }, [data, form]);
+    }, [userUpdate, formData]);
     return (
         <Form
-            form={form}
+            form={formData}
             name="basic"
             labelCol={{
                 span: 8,

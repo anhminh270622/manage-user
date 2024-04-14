@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { Modal } from 'antd';
-import { useNavigate, useRouterState } from '@tanstack/react-router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import FormLogin from '../modal/form-login';
+import React, { useState } from 'react';
 import { AddRegister } from '../../apis/register.api';
-import useNotificationService from '../notification'
+import FormLogin from '../modal/form-login';
+import useNotificationService from '../notification';
+import { useModalStore, useStore } from '../../zustand/store';
 export default function Register() {
     const navigate = useNavigate();
-    const [open, setOpen] = useState(true)
+    // const [open, setOpen] = useState(true)
+    const { openModal, closeModal } = useModalStore()
     const { openNotification, contextHolder } = useNotificationService()
-
+    const { setUser } = useStore()
     const { mutateAsync } = useMutation({
         mutationFn: AddRegister,
     });
-    const closeModal = () => {
-        setOpen(false)
+    const closeModalForm = () => {
+        closeModal()
         navigate({
             to: '/',
         })
@@ -22,25 +24,25 @@ export default function Register() {
     const onFinish = async (values) => {
         try {
             await mutateAsync(values);
-            closeModal();
+            closeModalForm();
             openNotification('success', 'Đăng ký thành công')
-            // form.resetFields()
-
+            navigate({
+                to: '/login',
+                state: { values }
+            })
+            setUser(values);
         } catch (error) {
             openNotification('error', 'Lỗi')
             console.error('Error:', error);
         }
     };
-    const openModal = () => {
-        setOpen(true)
-    }
 
     return (
         <div>
             <Modal
                 title='Đăng ký'
-                open={open}
-                onCancel={closeModal}
+                open={openModal}
+                onCancel={closeModalForm}
                 footer={null}>
                 <FormLogin type={'register'} onFinish={onFinish} />
             </Modal>

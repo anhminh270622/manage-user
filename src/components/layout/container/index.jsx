@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Modal, Spin, Form } from 'antd';
-import { FlexCenter, FlexSpaceBetween, FlexRight } from '../../define/flex';
-import { UserAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { ButtonStyled } from '../../define/button';
+import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate } from '@tanstack/react-router';
+import { Form, Modal, Spin, Table } from 'antd';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { addUser, getUser, removeUser } from '../../../apis/user.api';
+import { useStore } from '../../../zustand/store';
+import { ButtonStyled } from '../../define/button';
+import { FlexCenter, FlexRight } from '../../define/flex';
 import CustomForm from '../../modal/form';
 import Warning from '../../modal/warning';
 import useNotificationService from '../../notification';
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { addUser, getUser, removeUser } from '../../../apis/user.api';
-import { useNavigate } from '@tanstack/react-router';
-import { useToken } from "../../../zustand/store";
 const CustomFlexRight = styled(FlexRight)`
   width: 100%;
   margin: 0 auto;
@@ -20,29 +20,21 @@ const CustomFlexRight = styled(FlexRight)`
 `;
 
 const Container = () => {
-    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [type, setType] = useState('');
     const [warning, setWarning] = useState(false);
     const [id, setId] = useState('');
     const [dataEditable, setDataEditable] = useState({});
-    const [token, setToken] = useState(localStorage.getItem('token'));
     const { openNotification, contextHolder } = useNotificationService()
     const { mutateAsync } = useMutation({
         mutationFn: addUser,
     });
-    const { mutate, isLoadingDelete, isErrorDelete, errorDelete } = useMutation({ mutationFn: removeUser });
+    const { mutate } = useMutation({ mutationFn: removeUser });
     const { isLoading, error, data } = useQuery({ queryKey: ['users'], queryFn: getUser });
     const dataApi = data?.data;
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    // const token = useToken(state => state.token);
-
-
-    // useEffect(() => {
-    //     console.log('token:', token);
-    // }, [token])
-
+    const { token, userUpdate, setUserUpdate } = useStore();
     if (isLoading) return <FlexCenter><Spin /></FlexCenter>
     if (error) return <div>Error: {error.message}</div>
 
@@ -97,16 +89,13 @@ const Container = () => {
             ),
         },
     ];
-
-
-    // const [page] = useSearchParams();
-    // const searchParamsObject = Object.fromEntries([...useSearchParams()]);
-    // console.log(searchParamsObject);
     const openFormEdit = (data) => {
         navigate(`/${data.id}`);
         setType('edit');
         setOpen(true)
         setDataEditable(data);
+        setUserUpdate({ name: `${data.first_name + ' ' + data.last_name}`, job: 'it' });
+
     }
 
     const openFormAddNew = async (value) => {
@@ -144,8 +133,9 @@ const Container = () => {
     const closeForm = () => {
         setOpen(false);
         form.resetFields();
+        setUserUpdate('');
     }
-
+    console.log(userUpdate)
     return (
         <div>
             {contextHolder}
@@ -183,10 +173,10 @@ const Container = () => {
                 </ButtonStyled>
             </CustomFlexRight>
             <Table
-                style={{ minHeight: '570px' }}
+                style={{ minHeight: '530px' }}
                 columns={columns}
                 dataSource={dataApi}
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 4 }}
             />
         </div>
     );

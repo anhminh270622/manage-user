@@ -1,16 +1,19 @@
-import { Button } from "antd";
 
 const themeConfig = {
     token: {
         colorPrimary: '#FF8C00',
-        fontSize: 14, 
+        fontSize: 14,
         fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
         colorBgContainer: '#ffff',
+        borderRadius: 5,
+        colorLink: '#1677ff',
     },
     components: {
         Layout: {
             headerBg: '#FFA500',
+            siderBg: '#FFA500',
         },
+
         Button: {
         }
     }

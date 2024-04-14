@@ -1,26 +1,24 @@
-import React from 'react'
-const { Header, Footer, Sider, Content } = Layout;
+import { Flex, Layout } from 'antd';
+import React from 'react';
 import Container from './container';
-import Headers from './header';
 import Footers from './footer';
-import Sidebar from './sidebar';
-import { Layout, Flex } from 'antd';
-import { useMatch } from '@tanstack/react-router';
+import Headers from './header';
 import './layout.css';
+import Sidebar from './sidebar';
+const { Header, Footer, Sider, Content } = Layout;
 
 export default function LayoutContent({ children }) {
-    // const isNotFound = useMatch({ path: '*' });
     return (
         <Flex gap="middle" wrap="wrap">
             <Layout className='layout'>
                 <Header>
                     <Headers />
                 </Header>
-                <Layout>
-                    <Sider >
+                <Layout >
+                    <Sider width="15%">
                         <Sidebar />
                     </Sider>
-                    <Content >
+                    <Content className='content'>
                         <Container></Container>
                         {children}
                     </Content>

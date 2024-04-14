@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { Link } from '@tanstack/react-router'
-// const onFinish = (values) => {
-//     console.log('Success:', values);
-// };
-const onFinishFailed = (errorInfo) => {
-};
+import { Link } from '@tanstack/react-router';
+import { Button, Form, Input } from 'antd';
+import React from 'react';
+import { useStore } from '../../zustand/store';
+import { FlexRight } from '../define/flex';
+
 const FormLogin = ({ onFinish, type }) => {
+    const { userLogin } = useStore();
+
+    const onFinishFailed = (errorInfo) => {
+    };
     return (
         <Form
             // form={form}
@@ -22,6 +24,7 @@ const FormLogin = ({ onFinish, type }) => {
             }}
             initialValues={{
                 remember: true,
+                ...userLogin,
             }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -57,9 +60,12 @@ const FormLogin = ({ onFinish, type }) => {
             >
                 <Input.Password />
             </Form.Item>
-            <Link style={{ float: 'right' }} to={type === 'login' ? '/register' : '/login'}>
-                {type === 'login' ? 'Đăng Ký' : 'Đăng nhập'}
-            </Link>
+            <FlexRight>
+                <Link to={type === 'login' ? '/register' : '/login'}>
+                    {type === 'login' ? 'Đăng Ký' : 'Đăng nhập'}
+                </Link>
+            </FlexRight>
+
 
 
             <Form.Item
