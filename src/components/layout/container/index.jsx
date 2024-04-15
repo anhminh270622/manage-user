@@ -1,10 +1,10 @@
 import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from '@tanstack/react-router';
-import { Form, Modal, Spin, Table } from 'antd';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { Form, Modal, Spin, Table, Typography } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addUser, getUser, removeUser } from '../../../apis/user.api';
+import { addUser, getUser, removeUser, updateUser } from '../../../apis/user.api';
 import { useStore } from '../../../zustand/store';
 import { ButtonStyled } from '../../define/button';
 import { FlexCenter, FlexRight } from '../../define/flex';
@@ -24,17 +24,18 @@ const Container = () => {
     const [type, setType] = useState('');
     const [warning, setWarning] = useState(false);
     const [id, setId] = useState('');
-    const [dataEditable, setDataEditable] = useState({});
+    // const [dataEditable, setDataEditable] = useState({});
     const { openNotification, contextHolder } = useNotificationService()
     const { mutateAsync } = useMutation({
         mutationFn: addUser,
     });
     const { mutate } = useMutation({ mutationFn: removeUser });
+    const { mutate: mutateUpdate } = useMutation({ mutationFn: updateUser });
     const { isLoading, error, data } = useQuery({ queryKey: ['users'], queryFn: getUser });
     const dataApi = data?.data;
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const { token, userUpdate, setUserUpdate } = useStore();
+    const { token, setUserUpdate } = useStore();
     if (isLoading) return <FlexCenter><Spin /></FlexCenter>
     if (error) return <div>Error: {error.message}</div>
 
@@ -74,7 +75,7 @@ const Container = () => {
                         title={!token ? 'Vui lòng đăng nhập để sửa' : ''}
                         type="primary"
                         style={{ margin: '0 10px 10px 0' }}
-                        onClick={() => openFormEdit(record)}
+                        onClick={() => openEditForm(record)}
                         disabled={!token ? true : false}
                         icon={<EditOutlined />}
                     >Sửa</ButtonStyled>
@@ -89,18 +90,29 @@ const Container = () => {
             ),
         },
     ];
-    const openFormEdit = (data) => {
-        navigate(`/${data.id}`);
+    const SubmitFormEdit = (data) => {
+        navigate({ to: `/${id}` });
         setType('edit');
-        setOpen(true)
-        setDataEditable(data);
-        setUserUpdate({ name: `${data.first_name + ' ' + data.last_name}`, job: 'it' });
+        try {
+            mutateUpdate({ name: data.name, job: data.job, id: id });
+            openNotification('success', 'Sửa thành công')
+            setOpen(false)
+            form.resetFields();
+            setUserUpdate('');
+        }
+        catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    const openEditForm = (value) => {
+        setUserUpdate({ name: `${value.first_name + ' ' + value.last_name}`, job: '', id: value.id });
+        setId(value.id);
+        setType('edit');
+        setOpen(true);
 
     }
-
     const openFormAddNew = async (value) => {
         setType('add');
-        setOpen(true);
         try {
             mutateAsync(value);
             openNotification('success', 'Thêm mới thành công')
@@ -111,7 +123,8 @@ const Container = () => {
             console.error('Error:', error);
         }
     }
-    const openAddForm = async () => {
+    const openAddForm = () => {
+        form.resetFields();
         setType('add');
         setOpen(true);
     }
@@ -135,7 +148,6 @@ const Container = () => {
         form.resetFields();
         setUserUpdate('');
     }
-    console.log(userUpdate)
     return (
         <div>
             {contextHolder}
@@ -147,37 +159,50 @@ const Container = () => {
                 footer={null}
             >
                 <CustomForm
-                    data={type === 'edit' ? dataEditable : ''}
+                    // data={type === 'edit' ? dataEditable : ''}
                     form={form}
-                    onFinish={type === 'edit' ? '' : openFormAddNew}
+                    onFinish={type === 'edit' ? SubmitFormEdit : openFormAddNew}
                     type={type}
-                    openFormAddNew={openFormAddNew} />
+                />
             </Modal>
             <Modal
                 open={warning}
-                onOk={() => deleteUser(false)}
+                onOk={() => deleteUser()}
                 onCancel={() => setWarning(false)}
             >
                 <Warning text={'Bạn chắc chắn muốn xóa không ?'} />
             </Modal>
-            <CustomFlexRight>
-                <ButtonStyled
-                    title={!token ? 'Vui lòng đăng nhập để thêm mới' : ''}
-                    type="primary"
-                    style={{ marginRight: '30px' }}
-                    icon={<UserAddOutlined />}
-                    onClick={openAddForm}
-                    disabled={!token ? true : false}
-                >
-                    Thêm mới
-                </ButtonStyled>
-            </CustomFlexRight>
-            <Table
-                style={{ minHeight: '530px' }}
-                columns={columns}
-                dataSource={dataApi}
-                pagination={{ pageSize: 4 }}
-            />
+
+            {!token ? (
+                <>
+                    <Typography.Title level={2} style={{ textAlign: 'center', fontWeight: 'bold', paddingTop: '20px' }}>
+                        Vui lòng
+                        <Link to="/login"> đăng nhập </Link>
+                        để xem danh sách!
+                    </Typography.Title>
+                </>
+            ) : (
+                <>
+                    <CustomFlexRight>
+                        <ButtonStyled
+                            title={!token ? 'Vui lòng đăng nhập để thêm mới' : ''}
+                            type="primary"
+                            style={{ marginRight: '30px' }}
+                            icon={<UserAddOutlined />}
+                            onClick={openAddForm}
+                            disabled={!token ? true : false}
+                        >
+                            Thêm mới
+                        </ButtonStyled>
+                    </CustomFlexRight>
+                    <Table
+                        style={{ minHeight: '530px' }}
+                        columns={columns}
+                        dataSource={dataApi}
+                        pagination={{ pageSize: 4 }}
+                    />
+                </>
+            )}
         </div>
     );
 };

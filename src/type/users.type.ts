@@ -19,6 +19,7 @@ export type UserInput = {
 }
 
 export type UserUpdate = {
+    id?: number;
     name?: string;
     job?: string;
 }

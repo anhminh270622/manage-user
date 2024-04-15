@@ -23,7 +23,7 @@ export const useStore = create<Store>((set) => ({
     userLogin: { email: '', password: '' },
     setUser: (userLogin: UserInput) => set({ userLogin }),
 
-    userUpdate: { name: '', job: 'it' },
+    userUpdate: { name: '', job: '', id: 0 },
     setUserUpdate: (userUpdate: UserUpdate) => set({ userUpdate })
 }))
 

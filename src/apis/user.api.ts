@@ -13,7 +13,7 @@ export const getUserById = async (userId: User) => {
 
 }
 export const updateUser = async (value: User) => {
-    const response = await http.put('/users', {
+    const response = await http.put(`/users/${value.id}`, {
         name: value.name,
         job: value.job
     });
