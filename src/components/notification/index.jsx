@@ -1,4 +1,3 @@
-// useNotificationService.js
 import { notification } from 'antd';
 
 const useNotificationService = () => {

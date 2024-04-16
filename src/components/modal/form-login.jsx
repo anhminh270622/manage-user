@@ -62,7 +62,7 @@ const FormLogin = ({ onFinish, type }) => {
             </Form.Item>
             <FlexRight>
                 <Link to={type === 'login' ? '/register' : '/login'}>
-                    {type === 'login' ? 'Đăng Ký' : 'Đăng nhập'}
+                    {type === 'login' ? 'Register' : 'Login'}
                 </Link>
             </FlexRight>
 
@@ -75,7 +75,7 @@ const FormLogin = ({ onFinish, type }) => {
                 }}
             >
                 <Button type="primary" htmlType="submit">
-                    {type === 'login' ? 'Đăng nhập' : 'Đăng ký'}
+                    {type === 'login' ? 'Login' : 'Register'}
                 </Button>
             </Form.Item>
         </Form>

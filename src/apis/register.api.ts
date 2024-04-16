@@ -1,5 +1,5 @@
 import { UserInput } from "../type/users.type";
-import http from "../utils/http";
+import http from "./http";
 
 export const AddRegister = async (values: UserInput) => {
     const response = await http.post('/register', {

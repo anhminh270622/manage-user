@@ -1,13 +1,12 @@
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from '@tanstack/react-router';
-import { Button, Input, Modal, Typography } from 'antd';
+import { Button, Modal, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useStore } from '../../../zustand/store';
 import { ButtonStyled } from '../../define/button';
 import { FlexSpaceBetween } from '../../define/flex';
 import Warning from '../../modal/warning';
 import useNotificationService from '../../notification';
-const { Search } = Input;
 
 function Header() {
   const navigate = useNavigate();
@@ -48,12 +47,11 @@ function Header() {
       <FlexSpaceBetween style={{ width: '100%' }} >
         <Button type="text" onClick={() => navigate({ to: '/' })}>
           <Typography.Title level={2} style={{ fontWeight: 'bold', color: '#fff', lineHeight: '20px' }}>
-            Quản lý
+            Manage User
           </Typography.Title>
         </Button>
-        <Search style={{ width: '30%' }} placeholder="input search text" enterButton />
         <ButtonStyled type="primary" onClick={token ? openWarning : handleRegisterClick}>
-          {token ? (<><LogoutOutlined /> Đăng xuất</>) : (<><LoginOutlined /> Đăng nhập</>)}
+          {token ? (<><LogoutOutlined /> Logout</>) : (<><LoginOutlined /> Login</>)}
         </ButtonStyled>
       </FlexSpaceBetween>
     </>

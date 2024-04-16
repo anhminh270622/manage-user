@@ -1,5 +1,5 @@
 import { User } from '../type/users.type';
-import http from '../utils/http';
+import http from './http';
 
 
 export const getUser = async () => {

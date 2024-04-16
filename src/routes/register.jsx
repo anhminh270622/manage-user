@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Register from '../components/register'
-import LayoutContent from '../components/layout'
+import Register from '../components/feature/register'
 
 export const Route = createFileRoute('/register')({
-  component: () => <LayoutContent>
-    {<Register />}
-  </LayoutContent>
+  component: () =>
+    <Register />
 })

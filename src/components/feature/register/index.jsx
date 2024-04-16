@@ -1,14 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { Modal } from 'antd';
-import React, { useState } from 'react';
-import { AddRegister } from '../../apis/register.api';
-import FormLogin from '../modal/form-login';
-import useNotificationService from '../notification';
-import { useModalStore, useStore } from '../../zustand/store';
+import React from 'react';
+import { AddRegister } from '../../../apis/register.api';
+import { useModalStore, useStore } from '../../../zustand/store';
+import FormLogin from '../../modal/form-login';
+import useNotificationService from '../../notification';
 export default function Register() {
     const navigate = useNavigate();
-    // const [open, setOpen] = useState(true)
     const { openModal, closeModal } = useModalStore()
     const { openNotification, contextHolder } = useNotificationService()
     const { setUser } = useStore()
@@ -32,7 +31,7 @@ export default function Register() {
             })
             setUser(values);
         } catch (error) {
-            openNotification('error', 'Lỗi')
+            openNotification('error', error);
             console.error('Error:', error);
         }
     };
@@ -40,7 +39,7 @@ export default function Register() {
     return (
         <div>
             <Modal
-                title='Đăng ký'
+                title='Register'
                 open={openModal}
                 onCancel={closeModalForm}
                 footer={null}>

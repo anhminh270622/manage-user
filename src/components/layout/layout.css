@@ -3,6 +3,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+    height: 100vh;
 }
 
 Header {
@@ -12,7 +13,6 @@ Header {
     line-height: 64px;
     display: flex;
     align-items: center;
-    /* border-bottom: 2px solid #6f0808; */
 }
 
 .content {
@@ -20,9 +20,12 @@ Header {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
     overflow: hidden;
-    min-height: 600px;
+    /* min-height: 600px; */
+    height: 90%;
 }
 
 Footer {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+    z-index: 5;
 }

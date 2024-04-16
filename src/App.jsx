@@ -1,16 +1,23 @@
-import React from 'react';
-import { Layout, Flex, ConfigProvider } from 'antd';
-import { RouterProvider } from '@tanstack/react-router';
-import { createRouter } from '@tanstack/react-router';
-import './App.css';
-import themeConfig from './themeConfig';
 import {
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
-import { routeTree } from './routeTree.gen'
+} from '@tanstack/react-query';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { ConfigProvider } from 'antd';
+import React from 'react';
+import './App.css';
+import { routeTree } from './routeTree.gen';
+import themeConfig from './themeConfig';
+import NotFound from './components/notFound';
 const queryClient = new QueryClient()
-const router = createRouter({ routeTree })
+const router = createRouter({
+  routeTree,
+  defaultNotFoundComponent: () => {
+    return (
+      <NotFound />
+    )
+  }
+})
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ConfigProvider theme={themeConfig}>

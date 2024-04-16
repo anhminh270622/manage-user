@@ -7,6 +7,7 @@ const themeConfig = {
         colorBgContainer: '#ffff',
         borderRadius: 5,
         colorLink: '#1677ff',
+        colorError: '#ff4d4f',
     },
     components: {
         Layout: {

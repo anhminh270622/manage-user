@@ -15,10 +15,7 @@ const StyledMenuItem = styled(Menu.Item)`
 function Sidebar() {
   return (
     <Menu defaultSelectedKeys={['1']} mode="inline" style={{ backgroundColor: 'transparent', fontWeight: '700' }}>
-      <StyledMenuItem key="1"><UnorderedListOutlined /> Danh sách người dùng</StyledMenuItem>
-      <StyledMenuItem key="2"><UnorderedListOutlined /> Option 2</StyledMenuItem>
-      <StyledMenuItem key="3"><UnorderedListOutlined /> Option 3</StyledMenuItem>
-      <StyledMenuItem key="4"><UnorderedListOutlined /> Option 4</StyledMenuItem>
+      <StyledMenuItem key="1"><UnorderedListOutlined /> List</StyledMenuItem>
     </Menu>
   );
 }

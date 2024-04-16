@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { Modal } from 'antd';
 import React from 'react';
-import { LoginUser } from '../../apis/register.api';
-import { useModalStore, useStore } from '../../zustand/store';
-import FormLogin from '../modal/form-login';
-import useNotificationService from '../notification';
+import { LoginUser } from '../../../apis/register.api';
+import { useModalStore, useStore } from '../../../zustand/store';
+import FormLogin from '../../modal/form-login';
+import useNotificationService from '../../notification';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -15,9 +15,6 @@ export default function Login() {
     const { userLogin } = useStore()
     const { mutateAsync } = useMutation({
         mutationFn: LoginUser,
-        onError: (error) => {
-            openNotification('error', 'Lỗi đăng nhập');
-        },
     });
     const closeModalForm = () => {
         closeModal();
@@ -32,14 +29,14 @@ export default function Login() {
             openNotification('success', 'Đăng nhập thành công');
             closeModalForm();
         } catch (error) {
-            console.error('Error:', error);
+            openNotification('error', error);
         }
     };
 
     return (
         <div>
             <Modal
-                title='Đăng nhập'
+                title='Login'
                 open={openModal}
                 onCancel={closeModalForm}
                 footer={null}

@@ -1,6 +1,5 @@
 import { Flex, Layout } from 'antd';
 import React from 'react';
-import Container from './container';
 import Footers from './footer';
 import Headers from './header';
 import './layout.css';
@@ -14,12 +13,11 @@ export default function LayoutContent({ children }) {
                 <Header>
                     <Headers />
                 </Header>
-                <Layout >
-                    <Sider width="15%">
+                <Layout height="100%">
+                    <Sider width="15%" >
                         <Sidebar />
                     </Sider>
                     <Content className='content'>
-                        <Container></Container>
                         {children}
                     </Content>
                 </Layout>
