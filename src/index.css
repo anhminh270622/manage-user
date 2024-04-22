@@ -1,22 +1,18 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
 
-
 :root {
-  --background-primary: #FF8C00;
-  --background-primary-0: #FFA500;
-  --background-primary-1: #ffb716c9;
-  --background-button: #32CD32;
-  --background-button-delete: #FF0000;
-  --background-button-edit: #1677ff;
-  --color-white: #fff;
-  --color-black: #000;
-  --color-footer: #001529;
-  --color-secondary-light: #ffd1b1;
-  /* --color-secondary-lighter: #ffe2c4;
-  --color-text: #333333;
-  --color-text-light: #666666; */
+	--background-primary: #ff8c00;
+	--background-primary-0: #ffa500;
+	--background-primary-1: #ffb716c9;
+	--background-button: #32cd32;
+	--background-button-delete: #ff0000;
+	--background-button-edit: #1677ff;
+	--color-white: #fff;
+	--color-black: #000;
+	--color-footer: #001529;
+	--color-secondary-light: #ffd1b1;
 }

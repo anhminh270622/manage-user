@@ -3,15 +3,11 @@ import React from 'react';
 import LayoutContent from '../components/layout';
 
 export const Route = createRootRoute({
-    component: () => (
-        <>
-            <LayoutContent>
-                <Outlet />
-            </LayoutContent>
-        </>
-    ),
+	component: () => (
+		<>
+			<LayoutContent>
+				<Outlet />
+			</LayoutContent>
+		</>
+	),
 });
-
-
-
-

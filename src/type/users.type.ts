@@ -1,25 +1,25 @@
 export type User = {
-    id: number;
-    email: string;
-    password: string;
-    created_at: string;
-    updated_at: string;
-    first_name: string;
-    last_name: string;
-    job: string;
-    avatar: string;
-    name: string
-}
+	id: number;
+	email: string;
+	password: string;
+	created_at: string;
+	updated_at: string;
+	first_name: string;
+	last_name: string;
+	job: string;
+	avatar: string;
+	name: string;
+};
 
 export type Users = Array<User>;
 
 export type UserInput = {
-    email: string;
-    password: string;
-}
+	email: string;
+	password: string;
+};
 
 export type UserUpdate = {
-    id?: number;
-    name?: string;
-    job?: string;
-}
+	id?: number;
+	name?: string;
+	job?: string;
+};
